@@ -251,6 +251,22 @@ buff=[[],[]]
 maxBuff=20
 buff[0]=q.miniQueue(maxBuff)
 buff[1]=q.miniQueue(maxBuff)
+
+maxDepthBuff=10
+depthBuff=[[],[],[],[]]
+depthBuff[0]=q.miniQueue(maxDepthBuff)
+depthBuff[1]=q.miniQueue(maxDepthBuff)
+depthBuff[2]=q.miniQueue(maxDepthBuff)
+depthBuff[3]=q.miniQueue(maxDepthBuff)
+##################################################################################################################################################################################################################################################################################################################################
+yeah_flg=0
+oh_yeah_flg=0
+
+
+
+
+
+
 gestures=[[6,2,8,2,8],[9,3,9]]
 gestures=[ [str(i2) for i2 in i]for i in gestures]
 #recording flags        
@@ -266,8 +282,8 @@ wait_flg=0
 timeHold=80 #in milliseconds                
 
 #calibration
-mouseModeValue=80
-clickValue=80
+mouseModeValue=10
+clickValue=10
 knuckleValue=80
 lagValue=100
 calibration=False
@@ -347,8 +363,6 @@ timeInitial=time.time()
 
 print('press "c" to calibrate, then')
 print('press "r" to start recording')        
-
-
 while FLG:
 #-7#############################################################################
     if calibration: #do calibration
@@ -430,12 +444,14 @@ while FLG:
         tipIndex, tipIndexAngle, kIndex,kIndexAngle=indexData(newList)
         tipThumb,tipThumbAngle,kThumb,kThumbAngle=thumbData(newList)
         averageX,averageY=centerFind(rpt) #the center point
+    #Find out the location of the 2nd Wiimote LEDs
+        newList2=findDegrees(rpt2) #returns in from [(theta1,i1),(theta2,i2)....)]
+        tipIndex2, tipIndexAngle2, kIndex2,kIndexAngle2=indexData(newList2)
+        tipThumb2,tipThumbAngle2,kThumb2,kThumbAngle2=thumbData(newList2)
     #Check whether LED is in range
         newRpt=copy.deepcopy(rpt)
         rptList.append(newRpt)
         inrange, LED1,LED2,LED3,LED4=rangeChecker(rptList, LED1, LED2,LED3,LED4)
-
-
 
 
 #depth
@@ -452,10 +468,29 @@ while FLG:
 
         focal=1380 #pixels, I found this online
 
-        disparityTipThumb=((((rpt[tipThumb][0]-rpt2[tipThumb][0])**2)+(rpt[tipThumb][1]-rpt2[tipThumb][1])**2)**(0.5))
-        disparityKThumb=((((rpt[kThumb][0]-rpt2[kThumb][0])**2)+(rpt[kThumb][1]-rpt2[kThumb][1])**2)**(0.5))
-        disparityTipIndex=((((rpt[tipIndex][0]-rpt2[tipIndex][0])**2)+(rpt[tipIndex][1]-rpt2[tipIndex][1])**2)**(0.5))
-        disparityKIndex=((((rpt[kIndex][0]-rpt2[kIndex][0])**2)+(rpt[kIndex][1]-rpt2[kIndex][1])**2)**(0.5))
+        disparityTipThumb=fun.distanceVec(\
+        [rpt[tipThumb][0]],\
+        [rpt[tipThumb][1]],\
+        [rpt2[tipThumb2][0]],\
+        [rpt2[tipThumb2][1]])[0]
+
+        disparityKThumb=fun.distanceVec(\
+        [rpt[kThumb][0]],\
+        [rpt[kThumb][1]],\
+        [rpt2[kThumb2][0]],\
+        [rpt2[kThumb2][1]])[0]
+
+        disparityTipIndex=fun.distanceVec(\
+        [rpt[tipIndex][0]],\
+        [rpt[tipIndex][1]],\
+        [rpt2[tipIndex2][0]],\
+        [rpt2[tipIndex2][1]])[0]
+
+        disparityKIndex=fun.distanceVec(\
+        [rpt[kIndex][0]],\
+        [rpt[kIndex][1]],\
+        [rpt2[kIndex2][0]],\
+        [rpt2[kIndex2][1]])[0]
 
         disparityList=[disparityTipThumb,disparityKThumb,disparityTipIndex,disparityKIndex]
         depthList=[]
@@ -463,19 +498,29 @@ while FLG:
             if disparityList[i]<1:
                 depth=0
             else:
-                depth=1.0*focal/disparityList[i]*4.5 #cm, the b value
-            depthList.append(depth)
+                depth=1.0*focal/disparityList[i]*3.5 #cm, the b value
+            depthBuff[i].put(depth)
+#            depthList.append(depth)
 
-        
+
         screen.fill(black)
-
 
         mouseLabel=myfont.render("Mouse:"+" "+str(mouseModeValue) ,1,(255,255,255))
         screen.blit(mouseLabel,(0,80))
         clickLabel=myfont.render("Click:"+" "+str(clickValue) ,1,(255,255,255))
         screen.blit(clickLabel,(0,95))        
 
+        Calib1=calibFont.render("tipThumb:"+str(int(depthBuff[0].mean())),1,white)
+        screen.blit(Calib1,(0,115))
 
+        Calib2=calibFont.render("kThumb:"+str(int(depthBuff[1].mean())),1,white)
+        screen.blit(Calib2,(0,135))
+
+        Calib3=calibFont.render("tipIndex:"+str(int(depthBuff[2].mean())),1,white)
+        screen.blit(Calib3,(0,155))
+        
+        Calib4=calibFont.render("kIndex:"+str(int(depthBuff[3].mean())),1,white)
+        screen.blit(Calib4,(0,175))
 
         red=(255,0,0)
         tomato=(255,99,71)
@@ -487,15 +532,26 @@ while FLG:
         limeGreen=(50,205,50)
         lightGreen=(144,238,144)
 
-        pygame.draw.circle(screen, red, (rpt[tipIndex][0]/3,rpt[tipIndex][1]/3),10)
-        pygame.draw.circle(screen, tomato, (rpt[kIndex][0]/3,rpt[kIndex][1]/3),10)
-        pygame.draw.circle(screen, coral, (rpt[tipThumb][0]/3,rpt[tipThumb][1]/3),10)
-        pygame.draw.circle(screen, indianRed, (rpt[kThumb][0]/3,rpt[kThumb][1]/3),10)
+#        pygame.draw.circle(screen, red, (rpt[tipIndex][0]/3,rpt[tipIndex][1]/3),10)
+#        pygame.draw.circle(screen, tomato, (rpt[kIndex][0]/3,rpt[kIndex][1]/3),10)
+#        pygame.draw.circle(screen, coral, (rpt[tipThumb][0]/3,rpt[tipThumb][1]/3),10)
+#        pygame.draw.circle(screen, indianRed, (rpt[kThumb][0]/3,rpt[kThumb][1]/3),10)
 
-        pygame.draw.circle(screen, green, (rpt2[tipIndex][0]/3,rpt2[tipIndex][1]/3),10)
-        pygame.draw.circle(screen, lime, (rpt2[kIndex][0]/3,rpt2[kIndex][1]/3),10)
-        pygame.draw.circle(screen, limeGreen, (rpt2[tipThumb][0]/3,rpt2[tipThumb][1]/3),10)
-        pygame.draw.circle(screen, lightGreen, (rpt2[kThumb][0]/3,rpt2[kThumb][1]/3),10)
+        #pygame.draw.circle(screen, green, (rpt2[tipIndex2][0]/3,rpt2[tipIndex2][1]/3),10)
+        #pygame.draw.circle(screen, lime, (rpt2[kIndex2][0]/3,rpt2[kIndex2][1]/3),10)
+        #pygame.draw.circle(screen, limeGreen, (rpt2[tipThumb2][0]/3,rpt2[tipThumb2][1]/3),10)
+        #pygame.draw.circle(screen, lightGreen, (rpt2[kThumb2][0]/3,rpt2[kThumb2][1]/3),10)
+
+        pygame.draw.circle(screen, red, (rpt[tipIndex][0]/3,rpt[tipIndex][1]/3),10)
+        pygame.draw.circle(screen, blue, (rpt[kIndex][0]/3,rpt[kIndex][1]/3),10)
+        pygame.draw.circle(screen, green, (rpt[tipThumb][0]/3,rpt[tipThumb][1]/3),10)
+        pygame.draw.circle(screen, white, (rpt[kThumb][0]/3,rpt[kThumb][1]/3),10)
+
+        pygame.draw.circle(screen, red, (rpt2[tipIndex2][0]/3,rpt2[tipIndex2][1]/3),10)
+        pygame.draw.circle(screen, blue, (rpt2[kIndex2][0]/3,rpt2[kIndex2][1]/3),10)
+        pygame.draw.circle(screen, green, (rpt2[tipThumb2][0]/3,rpt2[tipThumb2][1]/3),10)
+        pygame.draw.circle(screen, white, (rpt2[kThumb2][0]/3,rpt2[kThumb2][1]/3),10)
+
 
         #GUI for depth
 
@@ -509,11 +565,10 @@ while FLG:
             depthLabel=depthFont.render( str(5*i),1,black)
             screen.blit(depthLabel,(660,offsetY+i*30))
 
-        pygame.draw.circle(screen, red, (560,int(75+depthList[0]*6)),10)
-        pygame.draw.circle(screen, tomato, (580,int(75+depthList[1]*6)),10)
-        pygame.draw.circle(screen, coral, (600,int(75+depthList[2]*6)),10)
-        pygame.draw.circle(screen, indianRed, (620,int(75+depthList[3]*6)),10)
-
+        pygame.draw.circle(screen, green, (560,int(75+depthBuff[0].mean()*6)),10) #tipThumb
+        pygame.draw.circle(screen, white, (580,int(75+depthBuff[1].mean()*6)),10) #kThumb
+        pygame.draw.circle(screen, red, (600,int(75+depthBuff[2].mean()*6)),10) #tipindex
+        pygame.draw.circle(screen, blue, (620,int(75+depthBuff[3].mean()*6)),10)#kIndex
 
 #Mouse Events
 #Drawing the mode
@@ -545,6 +600,9 @@ while FLG:
         if knuckleRatio>1:
             newMouseModeValue=int(knuckleRatio*mouseModeValue)
             newClickValue=int(knuckleRatio*clickValue)
+        else:
+            newMouseModeValue=mouseModeValue
+            newClickValue=clickValue
 
 #Switching Modes
         if 10<=dista[0]<=newMouseModeValue and inrange==1:                
@@ -571,10 +629,6 @@ while FLG:
         if distClick[0]<newClickValue and inrange and mouse_flg and not click_flg:
             click_flg=1
             stime=time.time()
-
-            ################################################EWRWERWERWERWERWERWERWERWER
-            print buff[0], buff[1]
-            print "gay"
             m.click(buff[0].mean(),buff[1].mean())
             dragX, dragY=buff[0].mean(),buff[1].mean()
             print('Click')
@@ -597,17 +651,40 @@ while FLG:
             print("release drag")
             print distClick[0]
 
+##################implement click with finger movement
+        if inrange and mouse_flg and not click_flg and not yeah_flg: #raise flg and store current values
+            ASDFTTD=depthBuff[0].mean()
+            ASDFTKD=depthBuff[1].mean()
+            ASDFITD=depthBuff[2].mean()
+            ASDFIKD=depthBuff[3].mean()
+            yeah_flg=1
+            print "yeah"
 
+        if mouse_flg:        
+            print depthBuff[0].mean(), ASDFTTD
 
+        if inrange and mouse_flg and not click_flg and yeah_flg:
+            if depthBuff[0].mean()-ASDFTTD<-3:
+                ASDFTTD=depthBuff[0].mean()
+                oh_yeah_flg=1
+                print "oh yeah"
 
+        if oh_yeah_flg and not click_flg and (depthBuff[0].mean()-ASDFTTD>3):
+            click_flg=1
+            yeah_flg=0
+            oh_yeah_flg=0
+            stime=time.time()
+            m.click(buff[0].mean(),buff[1].mean())
+            dragX, dragY=buff[0].mean(),buff[1].mean()
+            print('Click with finger')
 
 
 #Gestures
 #The gesture bounds
-    #    pygame.draw.line(screen,white, (gestureRightThreshHold/3,0),(gestureRightThreshHold/3,800))
-    #    pygame.draw.line(screen,red, (gestureLeftThreshHold/3,0),(gestureLeftThreshHold/3,800))
-    #    pygame.draw.line(screen,blue, (0,gestureDownThreshHold/3),(10000,gestureDownThreshHold/3))
-    #    pygame.draw.line(screen,yellow, (0,gestureUpThreshHold/3),(10000,gestureUpThreshHold/3))
+        pygame.draw.line(screen,white, (gestureRightThreshHold/3,0),(gestureRightThreshHold/3,800))
+        pygame.draw.line(screen,red, (gestureLeftThreshHold/3,0),(gestureLeftThreshHold/3,800))
+        pygame.draw.line(screen,blue, (0,gestureDownThreshHold/3),(10000,gestureDownThreshHold/3))
+        pygame.draw.line(screen,yellow, (0,gestureUpThreshHold/3),(10000,gestureUpThreshHold/3))
 #Swipe Right to Left
         if allAboveGestureRight(rpt,gestureRightThreshHold) and not gesture_flg_RL:
             gestureTime=time.time()

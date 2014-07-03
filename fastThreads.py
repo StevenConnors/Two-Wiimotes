@@ -13,7 +13,7 @@
 
 """
 #-1##############################################################################
-
+import constants as vals
 from pymouse import PyMouse
 from pykeyboard import PyKeyboard
 import pygame
@@ -389,8 +389,8 @@ while FLG:
         screen.fill(black)
 #Drawing the Circles
         pygame.draw.circle(screen, yellow, (rpt[tipIndex][0]/3,rpt[tipIndex][1]/3),10)
-        pygame.draw.circle(screen, red, (rpt[kIndex][0]/3,rpt[kIndex][1]/3),10)
-        pygame.draw.circle(screen, green, (rpt[tipThumb][0]/3,rpt[tipThumb][1]/3),10)
+        pygame.draw.circle(screen, vals.red, (rpt[kIndex][0]/3,rpt[kIndex][1]/3),10)
+        pygame.draw.circle(screen, vals.green, (rpt[tipThumb][0]/3,rpt[tipThumb][1]/3),10)
         pygame.draw.circle(screen, blue, (rpt[kThumb][0]/3,rpt[kThumb][1]/3),10)
         pygame.draw.circle(screen, white, (averageX/3,averageY/3),10)
 
@@ -837,7 +837,7 @@ while FLG:
             FLG=False
             pygame.quit()
             break
-    msElapsed=clock.tick(60)
+    msElapsed=clock.tick(100)
     pygame.display.update()     
 sys.exit()
 pygame.quit()

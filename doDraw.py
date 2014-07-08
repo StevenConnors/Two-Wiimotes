@@ -1,11 +1,4 @@
-
-import doDepth
-import doGestures
 import constants as vals
-import findingPoints
-import checkingInRange
-import gestureCheck
-
 from pymouse import PyMouse
 from pykeyboard import PyKeyboard
 import pygame

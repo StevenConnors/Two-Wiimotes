@@ -1,5 +1,37 @@
-    
-def eventHandling(pygame):
+import doMouse
+import doEvents
+import doDraw
+import doDepth
+import doGestures
+import constants as vals
+import findingPoints
+import checkingInRange
+import gestureCheck
+
+from pymouse import PyMouse
+from pykeyboard import PyKeyboard
+import pygame
+from pygame import mouse
+from pygame.locals import *
+import pickle
+import cwiid, time
+from pylab import *
+import funcs as fun
+import math
+import copy
+from time import sleep
+import sys
+import numpy as np
+import threading
+import os
+import miniQueue as q
+
+global FLG
+FLG=1
+m = PyMouse()
+k = PyKeyboard()
+
+def eventHandling():
     for event in pygame.event.get():
         if event.type==KEYDOWN:
             if event.key==pygame.K_r: #start recording
@@ -12,6 +44,9 @@ def eventHandling(pygame):
                 break
             elif event.key==pygame.K_q: #quits entirely
                 FLG=False
+                print "q pressed"
+                sys.exit()
+                pygame.quit()
                 break
             if vals.rec_flg: #if recording, can change the lag time
                 if event.key==pygame.K_z:
@@ -43,13 +78,6 @@ def eventHandling(pygame):
                         while min(vals.clickingCalibList)<30:
                             vals.clickingCalibList.remove(min(vals.clickingCalibList))
                         vals.clickValue=int(1.2*min(vals.clickingCalibList))
-
-                        vals.knuckleValue=fun.distanceVec(\
-                            [rpt[kIndex][0]],\
-                            [rpt[kIndex][1]],\
-                            [rpt[kThumb][0]],\
-                            [rpt[kThumb][1]])[0]
-
                         vals.clickingCalib=True                            
         if event.type==QUIT:
             FLG=False

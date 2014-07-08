@@ -176,7 +176,7 @@ while FLG:
 #                 m.move(smoothX,smoothY)                    
 ################################################################################################################
 #Various events (keyborad, quit, etc)
-    doEvents.eventHandling(pygame)
+    doEvents.eventHandling()
 
     msElapsed=clock.tick(40)
     pygame.display.update()     

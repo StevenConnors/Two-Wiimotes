@@ -1,25 +1,5 @@
-<<<<<<< HEAD
-import findingPoints
-from pymouse import PyMouse
-from pykeyboard import PyKeyboard
-import pygame
-from pygame import mouse
-from pygame.locals import *
-import pickle
-import cwiid, time
-from pylab import *
-import funcs as fun
-import math
-import copy
-from time import sleep
-import sys
-import numpy as np
-import threading
-import os
 import miniQueue as q
 
-global FLG
-FLG=1
 
 
 contDist=0
@@ -37,6 +17,29 @@ buff=[[],[]]
 maxBuff=20
 buff[0]=q.miniQueue(maxBuff)
 buff[1]=q.miniQueue(maxBuff)
+
+#
+rpt=[ [0,0] for i in range(4)]
+rpt2=[ [0,0] for i in range(4)]
+
+tipThumb=0
+tipIndex=0
+kThumb=0
+kIndex=0
+
+tipThumb2=0
+tipIndex2=0
+kThumb2=0
+kIndex2=0
+
+tipIndexAngle=0
+kIndexAngle=0
+tipThumbAngle=0
+kThumbAngle=0
+
+
+
+
 
 #calibration constants
 mouseModeValue=10
@@ -63,6 +66,7 @@ dragX=0
 dragY=0
 wait_flg=0
 timeHold=80 #in milliseconds      
+stime=0
 
 #Check inrange
 LED1=[]
@@ -96,8 +100,8 @@ gestureTime=0
 #just my constants for enabling actual clicking using thumb
 yeah_flg=0
 oh_yeah_flg=0
-=======
-class constants:
-    red = (255,0,0,120)
-    green = (0,255,0)
->>>>>>> 8bacf8bd14a4cbb62b29c403d308edec70fea01d
+
+ASDFTTD=0
+ASDFTKD=0
+ASDFITD=0
+ASDFIKD=0

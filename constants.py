@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import findingPoints
 from pymouse import PyMouse
 from pykeyboard import PyKeyboard
@@ -95,3 +96,8 @@ gestureTime=0
 #just my constants for enabling actual clicking using thumb
 yeah_flg=0
 oh_yeah_flg=0
+=======
+class constants:
+    red = (255,0,0,120)
+    green = (0,255,0)
+>>>>>>> 8bacf8bd14a4cbb62b29c403d308edec70fea01d

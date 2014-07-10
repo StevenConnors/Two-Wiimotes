@@ -102,11 +102,13 @@ wiiMote2 = CountThread(queueLock,"wiiMote2")
 wiiMote2.start()
 ###############################################################################
 
-print('press "c" to calibrate, then')
-print('press "r" to start recording')        
+print('press "l" to load calibration data, or press "c" to calibrate')
+print('then press "r" to start recording')
+#print('press "c" to calibrate, then')
+#print('press "r" to start recording')        
 
 while FLG:
-    if vals.calibration: #do calibration
+    if vals.calibration or vals.calibrationLoad: #do calibration
     #Receiving data from the threads
         rpt=wiiMote1.data
         rpt2=wiiMote2.data

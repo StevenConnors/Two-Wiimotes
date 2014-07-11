@@ -108,7 +108,7 @@ print('then press "r" to start recording')
 #print('press "r" to start recording')        
 
 while FLG:
-    if vals.calibration or vals.calibrationLoad: #do calibration
+    if vals.calibration or vals.calibLoadFlag: #do calibration
     #Receiving data from the threads
         rpt=wiiMote1.data
         rpt2=wiiMote2.data

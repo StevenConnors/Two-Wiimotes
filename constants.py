@@ -57,7 +57,7 @@ rightClickValue=180
 
 #calibration file using JSON
 calibFile = 'calib.data'
-calibrationLoad = False
+calibLoadFlag = False
 calibReadFinished = False
 calibWriteFinished = False
 

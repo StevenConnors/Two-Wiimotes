@@ -51,7 +51,7 @@ def eventHandling():
                 break
             #Load calibration data from file : 'l', load
             elif event.key == pygame.K_l:
-                vals.calibrationLoad = True
+                vals.calibLoadFlag = True
 
             if vals.rec_flg: #if recording, can change the lag time
                 if event.key==pygame.K_z:
@@ -91,7 +91,7 @@ def eventHandling():
                             calibWriter.write(vals.mouseModeValue, vals.clickValue)
                             vals.calibWriteFinished = True
 
-            if vals.calibrationLoad:
+            if vals.calibLoadFlag:
                 if not vals.calibReadFinished:
                     calibReader = CalibFileManager(vals.calibFile)
                     vals.mouseModeValue, vals.clickValue = calibReader.read()

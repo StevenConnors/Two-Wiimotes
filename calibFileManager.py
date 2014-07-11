@@ -5,31 +5,37 @@ import json
 class CalibFileManager:
     def __init__(self, fileName = 'calib.data'):
         self.fileName = fileName
+        self.calibJSON = ''
+        self.calibDic = {}
 
     def write(self, mouseModeValue, clickValue):
-        calibDic = {}
-        calibDic['mouseModeValue'] = mouseModeValue
-        calibDic['clickValue'] = clickValue
+        self.calibDic = {}
+        self.calibDic['mouseModeValue'] = mouseModeValue
+        self.calibDic['clickValue'] = clickValue
         #print 'Write Dic: ' + str(calibDic)
-        calibJSON = json.dumps(calibDic)
-        print 'Write JSON: ' + str(calibJSON)
+        self.calibJSON = json.dumps(self.calibDic)
+        print 'Write JSON: ' + str(self.calibJSON)
 
         calibWriter = open(self.fileName, 'w')
-        json.dump(calibJSON, calibWriter)
+        json.dump(self.calibJSON, calibWriter)
         calibWriter.close()
 
-    def read(self):
-        calibReader = open(self.fileName, 'r')
-        calibJSON = json.load(calibReader)
-        calibReader.close()
-        
-        print 'Read JSON: ' + str(calibJSON)
-        calibDic = json.JSONDecoder().decode(calibJSON)
-        if 'mouseModeValue' in calibDic and 'clickValue' in calibDic:
-            rtn = calibDic['mouseModeValue'], calibDic['clickValue']
-            print 'Read Value: ' + str(rtn)
+    def read(self, keyStr):
+        if self.calibJSON == '':
+            calibReader = open(self.fileName, 'r')
+            self.calibJSON = json.load(calibReader)
+            calibReader.close()
+            print 'Read JSON: ' + str(self.calibJSON)
+            self.calibDic = json.JSONDecoder().decode(self.calibJSON)
+
+        # if 'mouseModeValue' in calibDic and 'clickValue' in calibDic:
+        #     rtn = calibDic['mouseModeValue'], calibDic['clickValue']
+        #     print 'Read Value: ' + str(rtn)
+        if keyStr in self.calibDic:
+            rtn = str(self.calibDic[keyStr])
+            print 'Read ' + keyStr + ' : ' + rtn
         else:
         	print 'Error: invalid key name of calibration data.'
-        	rtn = 0, 0
+        	rtn = '0'
         return rtn
 

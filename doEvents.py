@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+
+import constants as vals
+
+=======
 import doMouse
 import doEvents
 import doDraw
@@ -10,10 +15,18 @@ import gestureCheck
 
 from pymouse import PyMouse
 from pykeyboard import PyKeyboard
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
 import pygame
 from pygame import mouse
 from pygame.locals import *
 import pickle
+<<<<<<< HEAD
+
+import sys
+
+
+def eventHandling(pygame):
+=======
 import cwiid, time
 from pylab import *
 import funcs as fun
@@ -33,6 +46,7 @@ m = PyMouse()
 k = PyKeyboard()
 
 def eventHandling():
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
     for event in pygame.event.get():
         if event.type==KEYDOWN:
             if event.key==pygame.K_r: #start recording
@@ -44,6 +58,10 @@ def eventHandling():
                 vals.rec_flg=False
                 break
             elif event.key==pygame.K_q: #quits entirely
+<<<<<<< HEAD
+                print "q pressed"
+                vals.quit_FLG=1
+=======
                 FLG=False
                 print "q pressed"
                 sys.exit()
@@ -53,6 +71,7 @@ def eventHandling():
             elif event.key == pygame.K_l:
                 vals.calibLoadFlag = True
 
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
             if vals.rec_flg: #if recording, can change the lag time
                 if event.key==pygame.K_z:
                     vals.lagValue+=100
@@ -83,6 +102,11 @@ def eventHandling():
                         while min(vals.clickingCalibList)<30:
                             vals.clickingCalibList.remove(min(vals.clickingCalibList))
                         vals.clickValue=int(1.2*min(vals.clickingCalibList))
+<<<<<<< HEAD
+                        vals.clickingCalib=True                            
+        if event.type==QUIT:
+            vals.quit_FLG=1
+=======
                         vals.clickingCalib=True  
 
                         #store them to file.
@@ -107,3 +131,4 @@ def eventHandling():
             FLG=False
             pygame.quit()
             break
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2

@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+
+
+import constants as vals
+import funcs as fun
+
+
+def findingDepth(rpt, rpt2, tipThumb,tipThumb2, kThumb,kThumb2, tipIndex,tipIndex2,kIndex,kIndex2):
+=======
 import doDepth
 import doGestures
 import constants as vals
@@ -32,6 +41,7 @@ k = PyKeyboard()
 def findingDepth(rpt, rpt2, tipThumb,tipThumb2, kThumb,kThumb2, tipIndex,tipIndex2,kIndex,kIndex2):
 
 
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
     focal=1380 #pixels, I found this online
     disparityTipThumb=fun.distanceVec([rpt[tipThumb][0]],[rpt[tipThumb][1]],\
                                 [rpt2[tipThumb2][0]],[rpt2[tipThumb2][1]])[0]

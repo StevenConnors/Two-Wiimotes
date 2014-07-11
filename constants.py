@@ -55,6 +55,12 @@ mouseModeCalibList=[]
 clickingCalibList=[]
 rightClickValue=180
 
+#calibration file using JSON
+calibFile = 'calib.data'
+calibLoadFlag = False
+calibReadFinished = False
+calibWriteFinished = False
+
 #recording flags
 rec_flg =0
 flg=True

@@ -25,6 +25,7 @@ import numpy as np
 import threading
 import os
 import miniQueue as q
+from calibFileManager import *
 
 global FLG
 FLG=1
@@ -48,6 +49,10 @@ def eventHandling():
                 sys.exit()
                 pygame.quit()
                 break
+            #Load calibration data from file : 'l', load
+            elif event.key == pygame.K_l:
+                vals.calibLoadFlag = True
+
             if vals.rec_flg: #if recording, can change the lag time
                 if event.key==pygame.K_z:
                     vals.lagValue+=100
@@ -78,7 +83,26 @@ def eventHandling():
                         while min(vals.clickingCalibList)<30:
                             vals.clickingCalibList.remove(min(vals.clickingCalibList))
                         vals.clickValue=int(1.2*min(vals.clickingCalibList))
-                        vals.clickingCalib=True                            
+                        vals.clickingCalib=True  
+
+                        #store them to file.
+                        if not vals.calibWriteFinished:
+                            calibWriter = CalibFileManager(vals.calibFile)
+                            calibWriter.write(vals.mouseModeValue, vals.clickValue)
+                            vals.calibWriteFinished = True
+
+            if vals.calibLoadFlag:
+                if not vals.calibReadFinished:
+                    calibReader = CalibFileManager(vals.calibFile)
+                    vals.mouseModeValue = calibReader.read('mouseModeValue')
+                    vals.clickValue = calibReader.read('clickValue')
+                    vals.clickingCalib = True
+                    vals.startClickModeCalib = True
+                    vals.mouseModeCalib = True
+                    vals.startMouseModeCalib = True
+                    
+                    vals.calibReadFinished = True
+                        
         if event.type==QUIT:
             FLG=False
             pygame.quit()

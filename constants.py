@@ -18,7 +18,7 @@ yellow = (255,255,0)
 gray= (205,200, 177)
 
 buff=[[],[]]
-maxBuff=20
+maxBuff=2
 buff[0]=q.miniQueue(maxBuff)
 buff[1]=q.miniQueue(maxBuff)
 

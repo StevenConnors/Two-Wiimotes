@@ -32,7 +32,6 @@ def gestures(averageX,averageY):
 	if gestureCheck.allAboveGestureRight(averageX,vals.gestureRightThreshHold) and not vals.gesture_flg_RL:
 		vals.gestureTime=time.time()
 		vals.gesture_flg_RL=1
-		print("ready to gesture RL")
 	if vals.gesture_flg_RL and (time.time()-vals.gestureTime)<1:
 		if gestureCheck.allAboveGestureLeft(averageX, vals.gestureLeftThreshHold):
 			k.press_key(k.control_key)
@@ -46,7 +45,6 @@ def gestures(averageX,averageY):
 	if gestureCheck.allAboveGestureLeft(averageX,vals.gestureLeftThreshHold) and not vals.gesture_flg_LR:
 		vals.gestureTime=time.time()
 		vals.gesture_flg_LR=1
-		print("ready to gesture LR")
 	if vals.gesture_flg_LR and (time.time()-vals.gestureTime)<1:
 		if gestureCheck.allAboveGestureRight(averageX, vals.gestureRightThreshHold):
 			k.press_key(k.control_key)
@@ -60,7 +58,6 @@ def gestures(averageX,averageY):
 	if gestureCheck.allAboveGestureDown(averageY,vals.gestureDownThreshHold) and not vals.gesture_flg_DU:
 		vals.gestureTime=time.time()
 		vals.gesture_flg_DU=1
-		print("ready to gesture DU")
 	if vals.gesture_flg_DU and (time.time()-vals.gestureTime)<1:
 		if gestureCheck.allAboveGestureUp(averageY, vals.gestureUpThreshHold):
 			k.press_key(k.control_key)
@@ -74,7 +71,6 @@ def gestures(averageX,averageY):
 	if gestureCheck.allAboveGestureUp(averageY,vals.gestureUpThreshHold) and not vals.gesture_flg_UD:
 		vals.gestureTime=time.time()
 		vals.gesture_flg_UD=1
-		print("ready to gesture UD")
 	if vals.gesture_flg_UD and (time.time()-vals.gestureTime)<1:
 		if gestureCheck.allAboveGestureDown(averageY, vals.gestureDownThreshHold):
 			k.press_key(k.control_key)

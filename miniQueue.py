@@ -24,7 +24,11 @@ class miniQueue():
     def erase(self):
         self.data=[]
     def mean(self):
-        return np.mean(self.data)
+        if len(self.data) > 0:
+            rtn = np.mean(self.data)
+        else:
+            rtn = 0
+        return rtn
         
     
 

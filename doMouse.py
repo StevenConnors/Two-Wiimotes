@@ -1,18 +1,42 @@
 import constants as vals
+<<<<<<< HEAD
 import funcs as fun
 import time
 
 
 def mouseActivities(rpt, tipIndex,tipThumb,kIndex,kThumb,m,k):
+=======
+from pymouse import PyMouse
+from pykeyboard import PyKeyboard
+import pygame
+from pygame import mouse
+from pygame.locals import *
+import pickle
+import cwiid, time
+from pylab import *
+import funcs as fun
+import numpy as np
+import miniQueue as q
+
+m = PyMouse()
+k = PyKeyboard()
+
+
+
+def mouseActivities(rpt, tipIndex,tipThumb,kIndex,kThumb):
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
 #Distance for switching modes
     dista=fun.distanceVec(\
     [rpt[tipIndex][0]],\
     [rpt[tipIndex][1]],\
     [rpt[tipThumb][0]],\
     [rpt[tipThumb][1]])
+<<<<<<< HEAD
 
     vals.tipDistance=dista[0]
 
+=======
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
 #Distance for clicking - thumb tip to index knuckle
     distClick=fun.distanceVec(\
     [rpt[kIndex][0]],\

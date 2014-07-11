@@ -1,6 +1,10 @@
 import miniQueue as q
 
+<<<<<<< HEAD
 quit_FLG=0
+=======
+
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
 
 contDist=0
 inrange=0
@@ -55,6 +59,15 @@ mouseModeCalibList=[]
 clickingCalibList=[]
 rightClickValue=180
 
+<<<<<<< HEAD
+=======
+#calibration file using JSON
+calibFile = 'calib.data'
+calibLoadFlag = False
+calibReadFinished = False
+calibWriteFinished = False
+
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
 #recording flags
 rec_flg =0
 flg=True
@@ -65,7 +78,11 @@ drag_flg=0
 dragX=0
 dragY=0
 wait_flg=0
+<<<<<<< HEAD
 timeHold=40 #in milliseconds      
+=======
+timeHold=80 #in milliseconds      
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
 stime=0
 
 #Check inrange
@@ -104,9 +121,13 @@ oh_yeah_flg=0
 ASDFTTD=0
 ASDFTKD=0
 ASDFITD=0
+<<<<<<< HEAD
 ASDFIKD=0
 
 
 
 
 tipDistance=0
+=======
+ASDFIKD=0
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2

@@ -1,4 +1,5 @@
 import constants as vals
+<<<<<<< HEAD
 
 import pygame
 
@@ -8,6 +9,37 @@ import funcs as fun
 
 
 def drawAllRecording(screen, rpt, rpt2, tipThumb,tipThumb2, kThumb,kThumb2, tipIndex,tipIndex2,kIndex,kIndex2,averageX,averageY,myfont, calibFont,depthFont):
+=======
+from pymouse import PyMouse
+from pykeyboard import PyKeyboard
+import pygame
+from pygame import mouse
+from pygame.locals import *
+import pickle
+import cwiid, time
+from pylab import *
+import funcs as fun
+import math
+import copy
+from time import sleep
+import sys
+import numpy as np
+import threading
+import os
+import miniQueue as q
+
+global FLG
+FLG=1
+m = PyMouse()
+k = PyKeyboard()
+
+pygame.font.init()
+myfont=pygame.font.SysFont("monospace",15)
+calibFont=pygame.font.SysFont("monospace",20)
+depthFont=pygame.font.SysFont("monospace",10)
+
+def drawAllRecording(screen, rpt, rpt2, tipThumb,tipThumb2, kThumb,kThumb2, tipIndex,tipIndex2,kIndex,kIndex2,averageX,averageY):
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
     screen.fill(vals.black)
 
     mouseLabel=myfont.render("Mouse:"+" "+str(vals.mouseModeValue) ,1,(255,255,255))
@@ -27,9 +59,12 @@ def drawAllRecording(screen, rpt, rpt2, tipThumb,tipThumb2, kThumb,kThumb2, tipI
     Calib4=calibFont.render("kIndex:"+str(int(vals.depthBuff[3].mean())),1,vals.white)
     screen.blit(Calib4,(0,175))
 
+<<<<<<< HEAD
     tipDistance=calibFont.render(str(int(vals.tipDistance)),1,vals.white)
     screen.blit(tipDistance,(0,205))
 
+=======
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
 #main circles
     pygame.draw.circle(screen, vals.red, (rpt[tipIndex][0]/3,rpt[tipIndex][1]/3),10)
     pygame.draw.circle(screen, vals.blue, (rpt[kIndex][0]/3,rpt[kIndex][1]/3),10)
@@ -74,7 +109,11 @@ def drawAllRecording(screen, rpt, rpt2, tipThumb,tipThumb2, kThumb,kThumb2, tipI
 
 
 
+<<<<<<< HEAD
 def drawAllCalibration(screen, rpt, tipIndex, tipThumb,kThumb,kIndex,averageX,averageY,myfont,calibFont,depthFont):
+=======
+def drawAllCalibration(screen, rpt, tipIndex, tipThumb,kThumb,kIndex,averageX,averageY):
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
     mouseModeDistance=fun.distanceVec(\
         [rpt[tipIndex][0]],\
         [rpt[tipIndex][1]],\
@@ -121,6 +160,7 @@ def drawAllCalibration(screen, rpt, tipIndex, tipThumb,kThumb,kIndex,averageX,av
         screen.blit(Calib1,(0,15))
         Calib2=calibFont.render("Press r to start recording",1,vals.black)
         screen.blit(Calib2,(0,35))
+<<<<<<< HEAD
 
 
 def drawAllMiniRecording(screen, rpt, rpt2, tipThumb,tipThumb2, kThumb,kThumb2, tipIndex,tipIndex2,kIndex,kIndex2,averageX,averageY,myfont, calibFont,depthFont):
@@ -189,3 +229,5 @@ def drawAllMiniCalibration(screen, rpt, tipIndex, tipThumb,kThumb,kIndex,average
         print "Calibration Completed"
         print "Press r to start recording"
         calibrationDone=1
+=======
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2

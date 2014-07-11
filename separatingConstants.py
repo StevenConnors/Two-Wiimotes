@@ -73,9 +73,12 @@ class CountThread(threading.Thread):
             self.data=rpt
             queueLock.release()
             sleep(0.001) #really interesting how the sleep makes it work
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
 ###############################################################################
 
 #Initialize rpt: (the location of LEDS)
@@ -95,10 +98,13 @@ width=infoObject.current_w
 height=infoObject.current_h
 screen=pygame.display.set_mode((width/2,height/2))
 
+<<<<<<< HEAD
 miniScreen=pygame.display.set_mode((width/8,height/8))
 
 
 
+=======
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
 #Start the threads ############################################################
 wiiMote1 = CountThread(queueLock,"wiiMote1")  #this inits
 wiiMote1.start() #run
@@ -109,11 +115,21 @@ wiiMote2 = CountThread(queueLock,"wiiMote2")
 wiiMote2.start()
 ###############################################################################
 
+<<<<<<< HEAD
 print('press "c" to calibrate, then')
 print('press "r" to start recording')        
 
 while FLG:
     if vals.calibration: #do calibration
+=======
+print('press "l" to load calibration data, or press "c" to calibrate')
+print('then press "r" to start recording')
+#print('press "c" to calibrate, then')
+#print('press "r" to start recording')        
+
+while FLG:
+    if vals.calibration or vals.calibLoadFlag: #do calibration
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
     #Receiving data from the threads
         rpt=wiiMote1.data
         rpt2=wiiMote2.data
@@ -128,8 +144,12 @@ while FLG:
         tipThumb,tipThumbAngle,kThumb,kThumbAngle=findingPoints.thumbData(newList)
         averageX,averageY=findingPoints.centerFind(rpt)
     #GUI section
+<<<<<<< HEAD
         doDraw.drawAllMiniCalibration(miniScreen, rpt, tipIndex, tipThumb,kThumb,kIndex,averageX,averageY,myfont,calibFont,depthFont)
         #doDraw.drawAllCalibration(screen, rpt, tipIndex, tipThumb,kThumb,kIndex,averageX,averageY,myfont,calibFont,depthFont)
+=======
+        doDraw.drawAllCalibration(screen, rpt, tipIndex, tipThumb,kThumb,kIndex,averageX,averageY)
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
 
     if vals.rec_flg==1: #Recording
     #Receiving data from the threads
@@ -158,11 +178,17 @@ while FLG:
 #Depth
         doDepth.findingDepth(rpt, rpt2, tipThumb,tipThumb2, kThumb,kThumb2, tipIndex,tipIndex2,kIndex,kIndex2)
 #GUI
+<<<<<<< HEAD
         #doDraw.drawAllRecording(screen, rpt, rpt2, tipThumb,tipThumb2, kThumb,kThumb2, tipIndex,tipIndex2,kIndex,kIndex2,averageX,averageY,myfont,calibFont,depthFont)
         doDraw.drawAllMiniRecording(miniScreen, rpt, rpt2, tipThumb,tipThumb2, kThumb,kThumb2, tipIndex,tipIndex2,kIndex,kIndex2,averageX,averageY,myfont,calibFont,depthFont)
 
 #Mouse Events
         doMouse.mouseActivities(rpt, tipIndex,tipThumb,kIndex,kThumb,m,k)
+=======
+        doDraw.drawAllRecording(screen, rpt, rpt2, tipThumb,tipThumb2, kThumb,kThumb2, tipIndex,tipIndex2,kIndex,kIndex2,averageX,averageY)
+#Mouse Events
+        doMouse.mouseActivities(rpt, tipIndex,tipThumb,kIndex,kThumb)
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2
 #Gestures
         doGestures.gestures(averageX,averageY)
 
@@ -186,6 +212,7 @@ while FLG:
 #                 m.move(smoothX,smoothY)                    
 ################################################################################################################
 #Various events (keyborad, quit, etc)
+<<<<<<< HEAD
     doEvents.eventHandling(pygame)
     if vals.quit_FLG: #if quit flg then break from while loop
         break 
@@ -200,3 +227,11 @@ for thread in [wiiMote1,wiiMote2]:
             thread._Thread__stop()
         except:
             print(('could not be terminated'))
+=======
+    doEvents.eventHandling()
+
+    msElapsed=clock.tick(40)
+    pygame.display.update()     
+sys.exit()
+pygame.quit()
+>>>>>>> 098035ea117798cf3908cf721c502fcebf4ee6a2

@@ -94,8 +94,8 @@ def eventHandling():
             if vals.calibLoadFlag:
                 if not vals.calibReadFinished:
                     calibReader = CalibFileManager(vals.calibFile)
-                    vals.mouseModeValue = calibReader.read('mouseModeValue')
-                    vals.clickValue = calibReader.read('clickValue')
+                    vals.mouseModeValue = int(calibReader.read('mouseModeValue'))
+                    vals.clickValue = int(calibReader.read('clickValue'))
                     vals.clickingCalib = True
                     vals.startClickModeCalib = True
                     vals.mouseModeCalib = True
